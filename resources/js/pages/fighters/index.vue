@@ -38,6 +38,6 @@
 import { Link } from '@inertiajs/vue3'
 
 defineProps({
-    fighters: Object,
+    fighters: Array
 })
 </script>
