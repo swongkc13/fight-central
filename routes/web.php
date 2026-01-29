@@ -12,10 +12,7 @@ Route::get('/fighters', [FighterController::class, 'index']);
 Route::get('/fighters/{id}', [FighterController::class, 'show'])
     ->where('id', '[A-Za-z0-9\-]+');
 
-
-Route::get('/', function () {
-    return Inertia::render('Home'); 
-})->name('home');
+Route::get('/', [FighterController::class, 'featured'])->name('home');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

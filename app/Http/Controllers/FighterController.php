@@ -11,7 +11,7 @@ class FighterController extends Controller
     {
         $response = Http::get('https://api.octagon-api.com/fighters')->json();
 
-        return Inertia::render('fighters/index', [
+        return Inertia::render('fighters/Index', [
             'fighters' => $response
         ]);
     }
@@ -20,8 +20,20 @@ class FighterController extends Controller
     {
         $fighter = Http::get("https://api.octagon-api.com/fighter/{$id}")->json();
 
-        return Inertia::render('fighters/show', [
+        return Inertia::render('fighters/Show', [
             'fighter' => $fighter
+        ]);
+    }
+
+    public function featured()
+    {
+        $fighters = Http::get('https://api.octagon-api.com/fighters')->json();
+
+        // Keep keys intact, just take first 10
+        $featured = array_slice($fighters, 0, 10, true);
+
+        return Inertia::render('Home', [
+            'featuredFighters' => $featured,
         ]);
     }
 }
