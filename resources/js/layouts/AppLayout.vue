@@ -3,20 +3,14 @@
     <!-- Navbar -->
     <header class="border-b border-zinc-800">
       <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link
-          href="/"
-          class="text-xl font-bold tracking-wide text-blue-400 hover:text-blue-300"
-        >
+        <Link href="/" class="text-xl font-bold tracking-wide text-blue-400 hover:text-blue-300">
           Fight Central
         </Link>
-
         <div class="flex items-center gap-6 text-sm">
-          <Link
-            href="/fighters"
-            class="text-zinc-300 hover:text-white transition"
-          >
-            Fighters
-          </Link>
+          <Link href="/" class="text-zinc-300 hover:text-white transition">Home</Link>
+          <Link href="/fighters" class="text-zinc-300 hover:text-white transition">Fighters</Link>
+          <Link href="/rankings" class="text-zinc-300 hover:text-white transition">Rankings</Link>
+          <Link href="/division" class="text-zinc-300 hover:text-white transition">Division</Link>
         </div>
       </nav>
     </header>
