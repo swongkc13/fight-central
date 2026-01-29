@@ -5,19 +5,9 @@
       class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-blue-600/20 rounded-full blur-3xl pointer-events-none">
     </div>
 
-    <!-- Hero Section -->
-    <div class="flex flex-col items-center justify-center text-center py-24 px-6">
-      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 leading-tight">
-        Welcome to <span class="text-blue-400">Fight Central</span>
-      </h1>
-      <p class="text-lg sm:text-xl md:text-2xl text-zinc-300 mb-10 max-w-3xl">
-        Browse MMA fighters, see their stats and details — built with Laravel, Inertia, Vue, and Tailwind!
-      </p>
-      <Link href="/fighters"
-        class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-10 py-5 rounded-xl text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-        Browse Fighters
-      </Link>
-    </div>
+    <HeroSection title="Fight Central"
+      subtitle="Browse MMA fighters, see their stats and details — built with Laravel, Inertia, Vue, and Tailwind!"
+      link-text="Browse Fighters" link-href="/fighters" />
 
     <!-- Featured Fighters Carousel -->
     <div class="mt-16 max-w-7xl mx-auto px-4">
@@ -76,6 +66,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import HeroSection from '@/components/HeroSection.vue';
 import AppLayout from '@/layouts/AppLayout.vue'
 
 defineOptions({ layout: AppLayout })
