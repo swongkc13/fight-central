@@ -2,35 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http;
+use App\Services\OctagonApi;
 use Inertia\Inertia;
 
 class FighterController extends Controller
 {
-    public function index()
+    public function index(OctagonApi $octagonApi)
     {
-        $response = Http::get('https://api.octagon-api.com/fighters')->json();
-
         return Inertia::render('fighters/Index', [
-            'fighters' => $response
+            'fighters' => $octagonApi->fighters(),
         ]);
     }
 
-    public function show($id)
+    public function show(OctagonApi $octagonApi, string $id)
     {
-        $fighter = Http::get("https://api.octagon-api.com/fighter/{$id}")->json();
+        $fighter = $octagonApi->fighter($id);
+
+        if (!$fighter) {
+            abort(404);
+        }
 
         return Inertia::render('fighters/Show', [
-            'fighter' => $fighter
+            'fighter' => $fighter,
         ]);
     }
 
-    public function featured()
+    public function featured(OctagonApi $octagonApi)
     {
-        $fighters = Http::get('https://api.octagon-api.com/fighters')->json();
-
-        // Keep keys intact, just take first 10
-        $featured = array_slice($fighters, 0, 10, true);
+        $featured = array_slice($octagonApi->fighters(), 0, 10, true);
 
         return Inertia::render('Home', [
             'featuredFighters' => $featured,

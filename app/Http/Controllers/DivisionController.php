@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Support\Facades\Http;
+use App\Services\OctagonApi;
 use Inertia\Inertia;
 
 class DivisionController extends Controller
@@ -20,26 +19,26 @@ class DivisionController extends Controller
     ];
 
     // Show all divisions (Index)
-    public function index()
+    public function index(OctagonApi $octagonApi)
     {
         $divisions = [];
 
         foreach ($this->divisionIds as $id) {
-            $response = Http::get("https://api.octagon-api.com/division/{$id}");
-            if ($response->successful()) {
-                $division = $response->json();
+            $division = $octagonApi->division($id);
+
+            if ($division) {
 
                 // Fetch image for first fighter to use as division image
                 $firstFighterId = $division['fighters'][0]['id'] ?? null;
                 $imgUrl = null;
                 if ($firstFighterId) {
-                    $fighterData = Http::get("https://api.octagon-api.com/fighter/{$firstFighterId}")->json();
+                    $fighterData = $octagonApi->fighter($firstFighterId);
                     $imgUrl = $fighterData['imgUrl'] ?? null;
                 }
 
                 // Fetch champion image if exists
                 if (isset($division['champion']['id'])) {
-                    $championData = Http::get("https://api.octagon-api.com/fighter/{$division['champion']['id']}")->json();
+                    $championData = $octagonApi->fighter($division['champion']['id']);
                     $division['champion']['imgUrl'] = $championData['imgUrl'] ?? null;
                 }
 
@@ -60,23 +59,22 @@ class DivisionController extends Controller
     }
 
     // Show a single division
-    public function show($id)
+    public function show(OctagonApi $octagonApi, string $id)
     {
-        $response = Http::get("https://api.octagon-api.com/division/{$id}");
-        $division = $response->successful() ? $response->json() : null;
+        $division = $octagonApi->division($id);
 
         if (!$division)
             abort(404);
 
         // Fetch champion image
         if (isset($division['champion']['id'])) {
-            $championData = Http::get("https://api.octagon-api.com/fighter/{$division['champion']['id']}")->json();
+            $championData = $octagonApi->fighter($division['champion']['id']);
             $division['champion']['imgUrl'] = $championData['imgUrl'] ?? null;
         }
 
         // Fetch images for all fighters
         foreach ($division['fighters'] as &$fighter) {
-            $fighterData = Http::get("https://api.octagon-api.com/fighter/{$fighter['id']}")->json();
+            $fighterData = $octagonApi->fighter($fighter['id']);
             $fighter['imgUrl'] = $fighterData['imgUrl'] ?? null;
         }
 

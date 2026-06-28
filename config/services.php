@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'octagon' => [
+        'base_url' => env('OCTAGON_API_URL', 'https://api.octagon-api.com'),
+        'cache_ttl' => env('OCTAGON_API_CACHE_TTL', 3600),
+        'timeout' => env('OCTAGON_API_TIMEOUT', 5),
+    ]
+
 ];
