@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use app\Services\OctagonApi;
+use App\Services\OctagonApi;
 use Inertia\Inertia;
 
 class RankingController extends Controller
